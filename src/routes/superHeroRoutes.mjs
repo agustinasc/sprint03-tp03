@@ -12,8 +12,9 @@ import {
     eliminarPorNombreSuperheroeController
 } from '../controllers/superheroesController.mjs';
 
-import { registerValidationRules } from '../middlewares/validationRules.js';
-import {validationResult} from 'express-validator'
+import { registerValidationRules, validatePoderes, validateAliados, validateEnemigos, } from '../middlewares/validationRules.js';
+import { body, validationResult } from 'express-validator';
+import { handleValidationErrors } from '../middlewares/errorMiddleware.js';
 
 
 
@@ -33,9 +34,8 @@ router.delete('/heroes/eliminar/:id', eliminarSuperheroeController)
 router.delete('/heroes/eliminar/nombre/:nombre', eliminarPorNombreSuperheroeController)
 
 
-/////TP 02
 
-router.post('/heroes/nombreSuperheroe/:nombreSuperheroe', 
+/* router.post('/heroes/nombreSuperheroe/:nombreSuperheroe', 
     registerValidationRules(), 
     (req, res, next) => {
         const errors = validationResult(req); 
@@ -46,15 +46,28 @@ router.post('/heroes/nombreSuperheroe/:nombreSuperheroe',
     (req, res) => {      
         res.send('Superhéroe validado correctamente')
     })
-
-/////TP 03
-
+ */
+    
+/* router.get("/", (req, res) => {
+        res.render("dashboard")
+      }) */
+  
 router.get('/heroes', obtenerTodosLosSuperheroesController)
-
 router.get('/formulario', mostrarFormularioAgregarSuperheroe); //Etapa 03
-router.post('/formulario/add', agregarNuevoSuperheroeController) //Etapa 03
+router.post('/formulario/add', 
+    registerValidationRules(), 
+    validatePoderes, 
+    validateAliados,
+    validateEnemigos,
+    handleValidationErrors, agregarNuevoSuperheroeController) //Etapa 03
 router.get('/formulario/:id', obtenerSuperheroePorIdController) //Etapa 04
-router.post('/formulario-edit/:id', editarSuperheroeController) //Etapa 04
-router.delete('/eliminar/:id', eliminarSuperheroeController) //Etapa 05
+router.post('/formulario-edit/:id', 
+    registerValidationRules(), 
+    validatePoderes,   
+    validateAliados,
+    validateEnemigos,
+    handleValidationErrors,
+    editarSuperheroeController) //Etapa 04
+router.post('/eliminar/:id', eliminarSuperheroeController) //Etapa 05
 
 export default router;

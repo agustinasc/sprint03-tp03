@@ -1,7 +1,7 @@
 import { obtenerSuperheroPorId, obtenerTodosLosSuperheroes, buscarSuperheroesPorAtributo, obtenerSuperheroesMayoresDe30, agregarNuevoSuperheroe, editarSuperheroe, eliminarSuperheroe, eliminarSuperheroePornombre } from '../services/superheroesService.mjs';
 import { renderizarSuperheroe, renderizarListaSuperheroes, renderizarMensaje } from '../views/responseView.mjs';
 import mongoose from 'mongoose';
-
+import { validationResult } from 'express-validator';
 
 
 ///TP 03 - ETAPA 02
@@ -10,7 +10,6 @@ import mongoose from 'mongoose';
 export async function obtenerTodosLosSuperheroesController(req, res) {
     try {
       const superheroes = await obtenerTodosLosSuperheroes();
-
 
       // Renderizar la vista 'dashboard.ejs' con los datos obtenidos
       res.render('dashboard', { superheroes });
@@ -21,34 +20,34 @@ export async function obtenerTodosLosSuperheroesController(req, res) {
     
 }
 
-///////////////////////PARA MOSTRAR FORMULARIOS /////
+///////////////////////PARA MOSTRAR FORMULARIOS ///////////////////////////////////
 
 export const mostrarFormularioAgregarSuperheroe = (req, res) => {
     res.render('addSuperhero'); // Renderiza la vista addSuperhero.ejs  
 }
 
-///////////////////////////////////////////////////////////////
-
+//////////////////////////////// PARA AGREGAR SUPERHEROES /////////////////////////////
 
 export const agregarNuevoSuperheroeController = async (req, res) => {
     console.log(req.body)
+    const errores = validationResult(req);
 
-    try {        
-        const nuevaData = req.body;
-               
-        await agregarNuevoSuperheroe(nuevaData);
-
-        res.redirect('/api/formulario');
-
-        alert("Superheroe")
-            
-    } catch (error) {
-        // Manejo de errores si algo sale mal con la consulta o el servidor
-        console.error("Error al AGREGAR el superhéroe:", error);
-        
-        res.status(500).send({ mensaje: "Hubo un problema al procesar la solicitud (controller)", error });
+    if(!errores.isEmpty()){
+        return res.render('addSuperhero', {
+            errores: errores.array(),
+            formData: req.body
+        })
     }
 
+    try {        
+        const nuevaData = req.body;               
+        await agregarNuevoSuperheroe(nuevaData);
+        res.redirect('/api/heroes');         
+    } catch (error) {
+        // Manejo de errores si algo sale mal con la consulta o el servidor
+        console.error("Error al AGREGAR el superhéroe:", error);       
+        res.status(500).send({ mensaje: "Hubo un problema al procesar la solicitud (controller)", error });
+    }
 }
 
 
@@ -177,10 +176,9 @@ export async function eliminarSuperheroeController(req, res) {
             return res.status(404).send({ mensaje: 'Superhéroe no encontrado' });
         }
         
-        alert("superheroe eliminado")
         
-        return res.status(200).send({ mensaje: 'ID de superhéroe eliminado', data: superheroeEliminado});
-
+        const superheroes = await obtenerTodosLosSuperheroes(); // Método del servicio que obtiene los superhéroes
+        res.render('dashboard', { superheroes });
 
     } catch(error){
 

@@ -76,29 +76,32 @@
     <form action="/api/formulario/add" method="POST">
 
         <label for="nombreSuperheroe">Nombre Superheroe</label>
-        <input type="text" name="nombreSuperheroe" id="nombreSuperheroe" minlength="3" maxlength="20" placeholder="SpiderWoman" required>
+        <input type="text" name="nombreSuperheroe" id="nombreSuperheroe" minlength="3" maxlength="25" placeholder="SpiderWoman" required>
 
         <label for="nombreReal">Nombre Real</label>
-        <input type="text" name="nombreReal" id="nombreReal" minlength="3" maxlength="20" placeholder="Luna Gutierrez" required>
+        <input type="text" name="nombreReal" id="nombreReal" minlength="3" maxlength="25" placeholder="Luna Gutierrez" required>
 
+    
         <label for="edad">Edad</label>
-        <input type="text" name="edad" id="edad" required min="0" placeholder="30">
+        <input type="number" name="edad" id="edad" required min="0" placeholder="30">
+        
 
         <label for="planetaOrigen">Planeta Origen</label>
-        <input type="text" name="planetaOrigen" id="planetaOrigen" minlength="3" maxlength="20" placeholder="Tierra" required>
+        <input type="text" name="planetaOrigen" id="planetaOrigen" minlength="3" maxlength="20" placeholder="Ej. Tierra" required>
 
         <label for="debilidad">Debilidad</label>
-        <input type="text" id="debilidad" name="debilidad" minlength="3" maxlength="60" placeholder="Radioactiva" required>
+        <input type="text" id="debilidad" name="debilidad" minlength="3" maxlength="60" placeholder="Ej. Radioactiva" required>
 
         <label for="poderes">Poderes</label>
-        <input type="text" id="poderes" name="poderes" minlength="3" maxlength="60" placeholder="Trepar paredes" required>
+        <textarea type="text" id="poderes" name="poderes" minlength="3" maxlength="60" placeholder="Trepar paredes" required></textarea>
+
 
         <label for="aliados">Aliados</label>
-        <input type="text" id="aliados" name="aliados" minlength="3" maxlength="60" placeholder="SpiderMan" required>
+        <textarea type="text" id="aliados" name="aliados" minlength="3" maxlength="60" placeholder="SpiderMan" required></textarea>
 
         <label for="enemigos">Enemigos</label>
-        <input type="text" id="enemigos" name="enemigos" minlength="3" maxlength="60" placeholder="Hydra" required>
-
+        <textarea type="text" id="enemigos" name="enemigos" minlength="3" maxlength="60" placeholder="Hydra" required></textarea>
+       
 
         <button type="submit">Agregar Superheroe</button>
     </form>

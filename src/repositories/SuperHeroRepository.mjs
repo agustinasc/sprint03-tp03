@@ -19,14 +19,18 @@ class SuperHeroRepository extends IRepository {
 
 
     async buscarPorAtributo(atributo, valor){
-        const query = { [atributo]: new RegExp(valor, 'i')};
-        return await SuperHero.find(query);
-    }
+        let query = {};
 
+        if (atributo === 'edad' && !isNaN(valor)) {
+            query[atributo] = parseInt(valor, 10);  // Convertir el valor a número
+        } else {
+            query[atributo] = new RegExp(valor, 'i');  // Para texto, usamos RegExp
+        }
+    }
 
     async obtenerMayoresDe30(){
         return await SuperHero.find({ edad: { $gt: 30 }, planetaOrigen: 'Tierra', 
-        $expr: { $gte: [{ $size: "$poderes" }, 3] }
+        $expr: { $gte: [{ $size: "$poderes" }, 2] }
         })
     }
 

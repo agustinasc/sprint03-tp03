@@ -111,7 +111,7 @@
 
         <label for="debilidad">Debilidad</label>
         <input 
-            type="text" id="debilidad" name="debilidad" 
+            type="text" id="debilidades" name="debilidad" 
             minlength="3" maxlength="60" 
             placeholder="Radioactiva" 
             value="<%= superheroe.debilidad %>"
@@ -119,31 +119,28 @@
         >
 
         <label for="poderes">Poderes</label>
-        <input 
+        <textarea 
             type="text" id="poderes" name="poderes" 
             minlength="3" maxlength="60" 
             placeholder="Trepar paredes" 
-            value="<%= superheroe.poderes %>"
             required
-        >
+        ><%= superheroe.poderes.join(', ') %></textarea>
 
         <label for="aliados">Aliados</label>
-        <input 
+        <textarea 
             type="text" id="aliados" name="aliados" 
             minlength="3" maxlength="60" 
             placeholder="SpiderMan" 
-            value="<%= superheroe.aliados %>"
             required
-        >
+        ><%= superheroe.aliados.join(', ') %></textarea>
 
         <label for="enemigos">Enemigos</label>
-        <input 
+        <textarea
             type="text" id="enemigos" name="enemigos" 
             minlength="3" maxlength="60" 
             placeholder="Hydra" 
-            value="<%= superheroe.enemigos %>"
             required
-        >
+        ><%= superheroe.enemigos.join(', ') %></textarea>
 
 
         <button type="submit">Actualizar Superheroe</button>

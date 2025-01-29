@@ -21,9 +21,11 @@ export async function obtenerSuperheroesMayoresDe30(){
 
     export const agregarNuevoSuperheroe = async (nuevaData) => {
         try{
-
+            const edad = Number(nuevaData.edad);
+                if (isNaN(edad)) {
+                    throw new Error("Por favor, ingresar un valor numerico para la edad");
+                }
             return await superHeroRepository.agregarNuevoHero(nuevaData)
-
         } catch(error){
             console.error("Error en el servicio al agregar el superhéroe:", error);
         throw error;
@@ -37,7 +39,7 @@ export async function obtenerSuperheroesMayoresDe30(){
         nombreReal, 
         edad,
         planetaOrigen,
-        debilidad,
+        debilidades,
         poderes, 
         aliados,
         enemigos
@@ -49,7 +51,7 @@ export async function obtenerSuperheroesMayoresDe30(){
                 nombreReal, 
                 edad,
                 planetaOrigen,
-                debilidad,
+                debilidades,
                 poderes, 
                 aliados,
                 enemigos
